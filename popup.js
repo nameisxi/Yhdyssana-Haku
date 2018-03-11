@@ -1,73 +1,53 @@
-// chrome.runtime.onInstalled.addListener(() => {
+document.getElementById("answer").style.visibility = "hidden";
 
-// });
-
-// document.getElementById("searchButton").addEventListener('click', () => {
-//     var wordToFind = document.getElementById("searchField").value;
-//     if (searchWord(wordToFind)) {
-//         document.getElementById("answer").innerHTML = "Sana on yhdyssana";
-//     } else {
-//         document.getElementById("answer").innerHTML = "Sana ei ole yhdyssana";
-//     }
-//     document.getElementById("answer").style.visibility = "visible";
-// });
-
-// function searchWord(wordToFind) {
-//     var xhttp = new XMLHttpRequest();
-//     xhttp.onreadystatechange = () => {
-//         if (this.readyState == 4 && this.status == 200) {
-//             myFunction(this);
-//         }
-//     };
-//     xhttp.open("GET", "kotus-sanalista_v1.xml", true);
-//     xhttp.send();
-
-//     function myFunction(xml) {
-//         var xmlDoc = xml.responseXML;
-//         var x = xmlDoc.getElementsByTagName('s')[0];
-//         var y = x.childNodes[0];
-//         var found = y.nodeValue;
-
-//         if (found == wordToFind) {
-//             return true;
-//         } else {
-//             return false;
-//         }
-//     }
-// }
-
-
-
-
-
-function doGET(path, callback) {
-    return new Promise((resolve, reject) => {
-        var xhr = new XMLHttpRequest();
-        xhr.onreadystatechange = function() {
-            if (xhr.readyState == 4) {
-                // The request is done; did it work?
-                if (xhr.status == 200) {
-                    // Yes, use `xhr.responseText` to resolve the promise
-                    resolve(xhr.responseText);
-                } else {
-                    // No, reject the promise
-                    reject(xhr);
+document.getElementById('searchButton').addEventListener('click', () => {
+    function getWords(path, callback) {
+        return new Promise((resolve, reject) => {
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4) {
+                    if (xhr.status == 200) {
+                        resolve(xhr.responseText);
+                    } else {
+                        reject(xhr);
+                    }
                 }
-             }
-        };
-        xhr.open("GET", path);
-        xhr.send();
-    });
-}
+            };
+            xhr.open("GET", path);
+            xhr.send();
+        });
+    }
 
-// Do the request
-doGET(chrome.runtime.getURL("/dictionary/sanalista.txt"))
-    .then(function(fileData) {
-        // Use the file data
-        var wordList = fileData.split("\n");
-        console.log(wordList[1]);
-    })
-    .catch(function(xhr) {
-        // The call failed, look at `xhr` for details
-        console.log("XHR Error");
-    });
+    getWords(chrome.runtime.getURL("/dictionary/sanalista.txt"))
+        .then(function (fileData) {
+            var wordList = fileData.split("\n");
+            var wordToFind = document.getElementById("searchField").value.trim().toLowerCase();
+
+            if (!(wordToFind == '') && !(wordToFind == undefined)) {
+                var wordToFindPieces = wordToFind.split(" ");
+                var wordToFindWithHyphen = wordToFindPieces[0] + "-" + wordToFindPieces[1];
+                var wordToFindWithoutSpace = wordToFindPieces[0] + wordToFindPieces[1];
+
+                if (wordList.includes(wordToFindWithHyphen)) {
+                    document.getElementById("answer").innerHTML = "Sana " + wordToFindWithHyphen + " on yhdyssana";
+                    document.getElementById("answer").style.color = "#00BFFE";
+                    document.getElementById("answer").style.visibility = "visible";
+                } else if (wordList.includes(wordToFindWithoutSpace)) {
+                    document.getElementById("answer").innerHTML = "Sana " + wordToFindWithoutSpace + " on yhdyssana";
+                    document.getElementById("answer").style.color = "#00BFFE";
+                    document.getElementById("answer").style.visibility = "visible";
+                } else {
+                    document.getElementById("answer").innerHTML = "Sanat " + wordToFindPieces[0] + " ja " + wordToFindPieces[1] + " eivät muodosta yhdyssanaa";
+                    document.getElementById("answer").style.color = "#AB0028";
+                    document.getElementById("answer").style.visibility = "visible";
+                }
+            } else {
+                document.getElementById("answer").innerHTML = "Et syöttänyt sanaa";
+                document.getElementById("answer").style.color = "#AB0028";
+                document.getElementById("answer").style.visibility = "visible";
+            }
+        })
+        .catch(function (xhr) {
+            console.log("XHR Error");
+        });
+});       

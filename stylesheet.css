@@ -1,0 +1,73 @@
+body {
+    background-color: #FCFAF3;
+    min-width: 200px;
+}
+
+hr {
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 1px solid #ccc;
+    margin: 1em 0;
+    padding: 0;
+}
+
+h1 {
+    font-family: 'Karma', serif;
+    font-weight: 600;
+    margin-bottom: 0px;
+}
+
+h2 {
+    font-family: 'Karma', serif;
+    font-weight: 400;
+    font-size: 18px;
+}
+
+p {
+    font-family: 'Karma', serif;
+    font-weight: 300;
+}
+
+i {
+    color: #00BFFE;
+}
+
+#searchField {
+    font-size: 16px;
+    font-family: 'Karma', serif;
+    font-weight: 600;
+    background-color: #FCFAF3;
+    border: 1px solid transparent;
+    border-bottom: 1px solid #F4E3C8;
+    color: #AB0028;
+    margin-top: 5px;
+}
+
+#searchField:focus {
+    outline: none !important;
+    border: 1px solid transparent;
+    border-bottom: 1px solid #F4E3C8;
+    color: #AB0028;
+    caret-color: #F4E3C8;
+}
+
+#searchButton {
+    font-size: 16px;
+    font-family: 'Karma', serif;
+    font-weight: 600; 
+    background-color: #F4E3C8;
+    border: solid 1px #F4E3C8;
+    color: #FCFAF3;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    cursor: pointer;
+    margin-left: -4px;
+}
+
+#searchButton:focus {
+    outline: none !important;
+    background-color: #F4E3C8;
+    border: 1px solid #F4E3C8;
+}

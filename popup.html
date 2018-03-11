@@ -3,15 +3,22 @@
     <head>
         <meta charset="utf-8" />
         <title>Yhdyssana Haku</title>
-        <script src="popup.js"></script>
+        <link rel="stylesheet" type="text/css" href="stylesheet.css">
+        <link href="https://fonts.googleapis.com/css?family=Karma:300,400,600" rel="stylesheet">
     </head>
 
     <body>
-        <h1>Yhdyssana Haku</h1>
-        <form>
-            <input id="searchField" type="text">
-            <button id="searchButton" type="button">Hae</button>
-        </form>
+        <h1>Yhdy<span style="color: #00BFFE">ss</span>ana Haku</h1>
+        <hr/>
+        <h2>Anna mahdollisen yhdy<span style="color: #00BFFE">ss</span>anan muodostavat sanat <span style="color: #AB0028">välimerkillä</span> eroteltuina</h2>
+        <p>Esimerkiksi sana <i>linja-auto</i> annetaan muodossa <i>linja auto</i></p>
+        <div id="searchArea">
+            <form>
+                <input id="searchField" type="text" spellcheck="false" size="15">
+                <button id="searchButton" type="button">Hae</button>
+            </form>
+        </div>
         <h2 id="answer"></h2>
+        <script src="popup.js"></script>
     </body>
 </html>
